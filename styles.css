@@ -1,0 +1,122 @@
+/* 
+  This is a SAMPLE File to get you started. Follow the instructions on the project to complete the tasks. 
+  You'll probably need to override some of theese styles.
+*/
+:root{
+    --background-color: #dd6d0a;
+    --color: black;
+}
+
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+.place-details{
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    margin: 20px;
+    padding: 10px;
+}
+
+.review{
+    margin: 20px;
+    padding: 10px;
+}
+
+.review button{
+    align-items: center;
+    border: 1px solid #333;
+    background-color: #f4f4f4;
+    padding: 10px 7px;
+}
+
+.review button:hover{
+    background-color: #333;
+    color: white;
+}
+
+.review-card p {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+.add-review{
+    margin: 10px;
+    line-height: 1.6;
+}
+
+.place-image{
+    width: 500px;
+    height: 500px;
+}
+
+.place-card{
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.details-button{
+    border: 1px solid #333;
+    background-color: #f4f4f4;
+    padding: 10px 7px;
+}
+
+.details-button:hover{
+    background-color: #333;
+    color: white;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: var(--background-color);
+    color: var(--color);
+    padding: 1rem;
+}
+
+nav{
+    display: flex;
+    align-items: center;
+}
+
+.logo{
+    margin-right: auto;
+}
+
+nav a {
+    text-align: right;
+    color: var(--color);
+    text-decoration: none;
+    margin-left: 1rem;
+}
+
+main {
+    padding: 2rem;
+}
+
+footer{
+    background-color: var(--background-color);
+    color: var(--color);
+    text-align: center;
+    padding: 3rem 0 1rem;
+}
