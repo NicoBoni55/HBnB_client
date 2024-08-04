@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import json
 from uuid import uuid4
@@ -17,8 +17,12 @@ with open('data/places.json') as f:
 # In-memory storage for new reviews
 new_reviews = []
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+
+    if (request.method == 'GET'):
+        return render_template('/login.html')
+
     email = request.json.get('email')
     password = request.json.get('password')
 
@@ -30,6 +34,15 @@ def login():
 
     access_token = create_access_token(identity=user['id'])
     return jsonify(access_token=access_token)
+
+@app.route('/data/<path:path>', methods=['GET'])
+def get_data(path):
+    return send_from_directory('data', path)
+
+@app.route('/index', methods=['GET'])
+def index():
+    if request.method == 'GET':
+        return render_template('index.html')
 
 @app.route('/places', methods=['GET'])
 def get_places():

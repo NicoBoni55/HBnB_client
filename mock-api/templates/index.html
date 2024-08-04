@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Places</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename= 'icons/icon.png') }}" type="image/png">
+</head>
+<body>
+    <header>
+        <nav>
+            <a class="logo">
+                <img src="{{ url_for('static', filename= 'icons/logo.png') }}" alt="logo">
+            </a>
+                <a href="login" id="login-link">Login</a>
+        </nav>
+    </header>
+    <main>
+        <section id="filter">
+            <label for="country-filter">Filter by Country:</label>
+            <select id="country-filter">
+                <!-- Options will be populated dynamically -->
+            </select>
+        </section>
+        <section id="places-list">
+            <!-- List of places will be populated dynamically -->
+        </section>
+        <div class="container">
+            <div class="place-card">
+                <div class="filterDiv" data-country="UY">
+                    <img class="place-image" src="{{ url_for('static', filename= 'images/Uruguay-hotel.png') }}">
+                    <div class="place-details">
+                        <h2>Hotel CasaPueblo</h2>
+                        <p>Price per night: $77</p>
+                        <p>Location: Uruguay</p>
+                        <a href="place.html">
+                            <button class="details-button">View Details</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="place-card">
+                <div class="filterDiv" data-country="ES">
+                    <img class="place-image" src="{{ url_for('static', filename= 'images/Spain-hotel.png') }}">
+                    <div class="place-details">
+                        <h2>Hotel Madrid</h2>
+                        <p>Price per night: $125</p>
+                        <p>Location: Spain</p>
+                        <a href="place.html">
+                            <button class="details-button">View Details</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="place-card">
+                <div class="filterDiv" data-country="BR">
+                    <img class="place-image" src="{{ url_for('static', filename= 'images/Brasil-hotel.png') }}">
+                    <div class="place-details">
+                        <h2>Hotel Fortaleza</h2>
+                        <p>Price per night: $70</p>
+                        <p>Location: Brazil</p>
+                        <a href="place.html">
+                            <button class="details-button">View Details</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <footer>
+        <div>
+            All rights reserved
+        </div>
+    </footer>
+</body>
+</html>
