@@ -19,7 +19,7 @@ new_reviews = []
 
 @app.route('/', methods=['GET'])
 def home():
-    return redirect("/log")
+    return redirect("/login")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
