@@ -32,45 +32,113 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-fetch('http://127.0.0.1:5000/data/countries.json')
-  .then((response) => response.json())
-  .then((data) => {
-    const countrySelect = document.getElementById('country-filter');
+function checkAuthentication() {
+  const token = getCookie('token');
+  const loginLink = document.getElementById('login-link');
 
-    const AllCountries = document.createElement('option');
-    AllCountries.value = 'all';
-    AllCountries.textContent = 'All';
-    countrySelect.appendChild(AllCountries);
+  if (!token) {
+      loginLink.style.display = 'block';
+  } else {
+      loginLink.style.display = 'none';
+      // Fetch places data if the user is authenticated
+      fetchPlaces(token);
+  }
+}
+function getCookie(name) {
+  const cookie = document.cookie.split(';');
+  const cookieValue = cookie.find(cookie => cookie.includes(name + '='));
+  if (cookieValue){
+    return cookieValue.split('=')[1];
+  }
+  else{
+    return null;
+  }
+}
 
-    data.forEach((country) => {
-      const countriesList = document.createElement('option');
-      countriesList.value = country.code;
-      countriesList.textContent = country.name;
-      countrySelect.appendChild(countriesList);
+document.addEventListener('DOMContentLoaded', checkAuthentication);
+
+async function fetchPlaces(token) {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/data/places.json', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     });
+
+    if(!response.ok) {
+      throw new Error('Failed to fetch places data');
+    }
+    const data = await response.json();
     console.log(data);
-  })
-  .catch((error) => {
+    displayPlaces(data);
+    listCountryFilter(data);
+  } catch (error) {
     console.error('Error:', error);
+  }
+}
+
+function displayPlaces(places) {
+  const placesList = document.getElementById('places-list');
+  placesList.innerHTML = '';
+
+  places.forEach(place => {
+    const placeCard = document.createElement('div');
+    placeCard.className = 'place-card';
+    placeCard.setAttribute('data-country', place.country_code);
+    
+    const placeImage = `/static/images/${place.id}.jpg`;
+
+    placeCard.innerHTML = `
+      <div class="place-details">
+        <img class="place-image" src="${placeImage}" alt="${place.id}">
+        <h2>${place.id}</h2>
+        <p>Price per night: $${place.price_per_night}</p>
+        <p>Location: ${place.country_name}</p>
+        <a href="place.html">
+          <button class="details-button">View Details</button>
+        </a>
+      </div>
+    `;
+
+    placesList.appendChild(placeCard);
   });
+}
 
 function filterCountries(){
   const countrySelect = document.getElementById('country-filter');
   const selectedCountry = countrySelect.value;
-  const cards = document.getElementsByClassName('filterDiv');
+  const cards = document.getElementsByClassName('place-card');
 
   for (let card of cards) {
-    if (selectedCountry === 'all') {
+    const cardCountry = card.getAttribute('data-country');
+    if (selectedCountry === 'all' || selectedCountry === cardCountry) {
       card.style.display = 'block';
-    } else {
-      card.style.display = card.getAttribute('data-country')
-      if (card.getAttribute('data-country') === selectedCountry) {
-        card.style.display = 'block';
-      }
-      else {
-        card.style.display = 'none';
-      }
+    }
+    else {
+      card.style.display = 'none';
     }
   }
 }
-document.getElementById('country-filter').addEventListener('change', filterCountries);  
+document.getElementById('country-filter').addEventListener('change', (event) => {
+const selectedCountry = event.target.value;
+filterCountries(selectedCountry);
+});
+function listCountryFilter(data){
+  const countrySelect = document.getElementById('country-filter');
+  const allCountries = document.createElement('option');
+  allCountries.value = 'all';
+  allCountries.textContent = 'All';
+  countrySelect.appendChild(allCountries); 
+
+  const country = new Set();
+
+  data.forEach(place => {
+    if(!country.has(place.country_code)){
+      country.add(place.country_code);
+    const countryOption = document.createElement('option');
+    countryOption.value = place.country_code;
+    countryOption.textContent = place.country_name;
+    countrySelect.appendChild(countryOption);
+    }
+  });
+}

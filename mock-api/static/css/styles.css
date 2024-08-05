@@ -20,6 +20,16 @@ html{
     padding: 10px;
 }
 
+label{
+    display: block;
+    font-size: 1rem;
+}
+
+h2{
+    text-align: center;
+    margin: 20px;
+}
+
 .review{
     margin: 20px;
     padding: 10px;

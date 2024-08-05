@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, send_from_directory
+from flask import Flask, request, jsonify, render_template, send_from_directory,redirect
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import json
 from uuid import uuid4
@@ -16,6 +16,10 @@ with open('data/places.json') as f:
 
 # In-memory storage for new reviews
 new_reviews = []
+
+@app.route('/', methods=['GET'])
+def home():
+    return redirect("/log")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
